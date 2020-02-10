@@ -5,7 +5,7 @@
 using namespace std;
 
 int main(void) {
-  ifstream infile("./input/e_also_big.in");
+  ifstream infile("./input/b_small.in");
   int M,N;
   infile >> M >> N;
 
@@ -16,17 +16,14 @@ int main(void) {
   }
 
   bool *b1 = new bool[N];
-  int prevSum = 0;
+  int bestSum = 0;
   int sum = 0;
   bool *bestB = new bool[N];
   i = 0;
 
   for(i=0;i<pow(2.0,(double) N);i++) {
     int j;
-    // for(j=0;j<N;j++) {
-    //   cout << b1[j];
-    // }
-    //cout << endl;
+
     for(j=0;j<N;j++) {
       if(b1[j] == false) {
         sum += arr[j];
@@ -39,15 +36,24 @@ int main(void) {
       }
     }
     if(sum == M) {
-      prevSum = sum;
+      bestSum = sum;
       break;
     }
     else if(sum > M) {
-      break;
+      continue;
     }
-    prevSum = sum;
+    if(bestSum < sum) {
+      bestB = b1;
+      bestSum = sum;
+    }
   }
 
-  cout << "score " << prevSum <<endl;
+  cout << "score " << bestSum <<endl;
+  for(i=0;i<N;i++) {
+    if(bestB[i]) {
+      cout << i << " ";
+    }
+  }
+  cout << endl;
   return 0;
 }
